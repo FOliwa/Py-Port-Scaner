@@ -1,0 +1,48 @@
+# Python related
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Vagrant related
+.vagrant/
+.vagrantfile.local
+
+# Environment related
+venv/
+env/
+*.env
+
+# Editor/IDE related
+.vscode/
+.idea/
+
+# Compiled files
+*.pyc
+*.pyo
+
+# Logs
+*.log
+log/
+logs/
+
+# Temporary files
+*.swp
+*.swo
+
+# Compiled Python files
+*.pyc
+*.pyo
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Compiled binaries
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Virtual environment
+venv/
