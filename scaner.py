@@ -8,11 +8,12 @@ class PortScaner:
     - A listening socket does just what its name suggests. It listens for connections from clients.
     - The client calls .connect() to establish a connection to the server and initiate the three-way handshake. 
     """
-    def __init__(self, target_hosts=["127.0.0.1"], target_ports=[80]) -> None:
+    def __init__(self, target_hosts=["127.0.0.1"], target_ports: [list, range] = [80]) -> None:
         self.target_hosts = target_hosts
         self.target_ports = target_ports
 
     def run_scanner(self):
+        # TODO: Find better way to scan it - split scaning to multiple threads
         for host in self.target_hosts:
             for port in self.target_ports:
                 self.scan(host, port)
