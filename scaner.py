@@ -14,16 +14,28 @@ class PortScaner:
 
     def run_scanner(self):
         # TODO: Find better way to scan it - split scaning to multiple threads
-        for host in self.target_hosts:
-            for port in self.target_ports:
-                self.scan(host, port)
+        open_ports = []
 
-    def scan(self, target_host, target_port):
+        for host in self.target_hosts:
+            open_ports = [port for port in self.target_ports if self.tcp_port_open(host, port)]
+            print(f"List of open ports for host: {host}:")
+            print(f"{open_ports}")
+                    
+
+    def tcp_port_open(self, target_host, target_port):
         try:
-            # Create socket obj using with and close at the end
+            # Try to establish connection
             with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client:
-                # Try to connect
                 client.connect((target_host, target_port))
                 print(f"Connection to {target_host}:{target_port} is established!")
+                return True
+        except socket.timeout:
+            print(f"Port {target_port} is closed (timeout)")
+        except ConnectionRefusedError:
+            print(f"Port {target_port} is closed (connection refused)")
         except Exception as e:
             print(f"Connection to {target_host}:{target_port} failed: {e}")
+        return False
+
+    def scan_udp_port():
+        pass
