@@ -24,6 +24,6 @@ class InputSanitizer:
             else:
                 ports = ports_value.split(',')
                 if all([p.isdigit() for p in ports]):
-                    return (p for p in ports if p.isdigit())
+                    return map(int, [p for p in ports if p.isdigit()])
         except Exception:
             return False
