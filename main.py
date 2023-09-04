@@ -3,19 +3,13 @@ from typing import List
 from validator import InputSanitizer
 from scaner import PortScaner
 
+
 def main():
     ip_address = get_target_ip_address()
     ports = get_target_ports()
     scaner = PortScaner([ip_address], ports)
     scaner.run_scanner()
-    display_scanning_results()
-
-
-def display_scanning_results():
-    """ #TODO:
-    Display the results to the user, indicating which ports are open and which are closed.
-    """
-    pass
+    scaner.display_scanning_results()
 
 
 def get_target_ports() -> List[int]:

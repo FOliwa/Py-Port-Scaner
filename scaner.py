@@ -11,24 +11,25 @@ class PortScaner:
     def __init__(self, target_hosts=["127.0.0.1"], target_ports: [list, range] = [80]) -> None:
         self.target_hosts = target_hosts
         self.target_ports = target_ports
+        self.open_tcp_ports = []
+        self.open_upd_ports = []
         self.scan_tcp = True
         self.scan_udp = False
 
     def run_scanner(self):
         # TODO: Find better way to scan it - split scaning to multiple threads
-        open_tcp_ports = []
-        open_udp_ports = []
 
         for host in self.target_hosts:
             if self.scan_tcp:
-                open_tcp_ports = [port for port in self.target_ports if self.tcp_port_open(host, port)]
-                print(f"Open TCP ports for host: {host}:")
-                print(f"{open_tcp_ports}")
+                self.open_tcp_ports = [port for port in self.target_ports if self.tcp_port_open(host, port)]
+                # print(f"Open TCP ports for host: {host}:")
+                # print(f"{open_tcp_ports}")
 
             if self.scan_udp:
-                open_udp_ports = [port for port in self.target_ports if self.udp_port_open(host, port)]
-                print(f"Open UDP ports for host: {host}:")
-                print(f"{open_udp_ports}")
+                self.open_upd_ports = [port for port in self.target_ports if self.udp_port_open(host, port)]
+                # print(f"Open UDP ports for host: {host}:")
+                # print(f"{open_udp_ports}")
+
 
     def tcp_port_open(self, target_host, target_port):
         """ Scan TCP port by establish connection between targeted system on 
@@ -41,11 +42,14 @@ class PortScaner:
                 print(f"Connection to {target_host}:{target_port} is established!")
                 return True
         except socket.timeout:
-            print(f"Port {target_port} is closed (timeout)")
+            pass
+            # print(f"Port {target_port} is closed (timeout)")
         except ConnectionRefusedError:
-            print(f"Port {target_port} is closed (connection refused)")
+            pass
+            # print(f"Port {target_port} is closed (connection refused)")
         except Exception as e:
-            print(f"Connection to {target_host}:{target_port} failed: {e}")
+            pass
+            # print(f"Connection to {target_host}:{target_port} failed: {e}")
         return False
 
     def udp_port_open(self, target_host, target_port):
@@ -75,3 +79,12 @@ class PortScaner:
             except Exception as e:
                 print(f"Error scaning UDP Port {target_port}: {e}")
         return False
+
+    def display_scanning_results(self):
+        print(f"Open ports for host: {self.target_hosts}:")
+        if self.scan_tcp:
+            print(f"Open TCP ports for host: {self.open_tcp_ports}:")
+        if self.scan_udp:
+            print(f"Open TCP ports for host: {self.open_upd_ports}:")
+        if any([self.scan_tcp, self.scan_udp]):
+            print("Nothing to scann - select TCP or UDP port scaning.")
