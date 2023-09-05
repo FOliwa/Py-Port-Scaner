@@ -1,6 +1,6 @@
-# 🐍🚢🛂 PyPortScaner - Simple Network Port Scanner
+# 🐍🚢🛂 Py-Port-Scaner - Simple Network Port Scanner
 
-PyPortScaner is a Python program that functions as a network port scanner. 
+Py-Port-Scaner is a Python program that functions as a network port scanner. 
 A port scanner is a tool used to discover open ports on a network host, which can help identify potential vulnerabilities.
 
 # 📔 Project Plan
